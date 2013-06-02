@@ -28,6 +28,9 @@
     <ClCompile Include="..\YHScript\ScriptCore.cpp">
       <Filter>YHScript</Filter>
     </ClCompile>
+    <ClCompile Include="..\YHScript\JSValUtil.cpp">
+      <Filter>YHScript</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -46,6 +49,9 @@
       <Filter>YHScript</Filter>
     </ClInclude>
     <ClInclude Include="..\YHScript\ScriptCore.h">
+      <Filter>YHScript</Filter>
+    </ClInclude>
+    <ClInclude Include="..\YHScript\JSValUtil.h">
       <Filter>YHScript</Filter>
     </ClInclude>
   </ItemGroup>

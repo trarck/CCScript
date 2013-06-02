@@ -1,6 +1,6 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
-
+#include "YHScript/ScriptCore.h"
 using namespace cocos2d;
 using namespace CocosDenshion;
 
@@ -66,6 +66,10 @@ bool HelloWorld::init()
     /////////////////////////////
     // 3. add your codes below...
     
+    yhscript::ScriptCore* sc=yhscript::ScriptCore::getInstance();
+    sc->start();
+    sc->executeScriptFile("main.js");
+
     return true;
 }
 
