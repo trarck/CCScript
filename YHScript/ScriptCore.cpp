@@ -313,7 +313,7 @@ void ScriptCore::createGlobalContext() {
     //}
 }
 
-JSBool ScriptCore::evaluateString(const char *string, jsval *outVal, const char *filename , JSContext* cx, JSObject* global )
+JSBool ScriptCore::evaluateString(const char *string, jsval *outVal, const char *filename, JSObject* global , JSContext* cx )
 {
     return JS_EvaluateScript(cx, global, string, strlen(string),
                            filename, 0, outVal);
@@ -341,7 +341,7 @@ JSBool ScriptCore::evaluateString(const char *string, jsval *outVal, const char 
 
 
 
-JSBool ScriptCore::executeScriptFile(const char *path, JSObject* global, JSContext* cx)
+JSBool ScriptCore::executeScriptFile(const char *path, jsval* outVal,JSObject* global, JSContext* cx)
 {
     if (!path) {
         return false;
@@ -385,9 +385,11 @@ JSBool ScriptCore::executeScriptFile(const char *path, JSObject* global, JSConte
     JSBool evaluatedOK = false;
     if (script) {
         jsval rval;
+		outVal=outVal==NULL?&rval:outVal;
+
         filename_script[path] = script;
         JSAutoCompartment ac(cx, global);
-        evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
+        evaluatedOK = JS_ExecuteScript(cx, global, script, outVal);
         if (JS_FALSE == evaluatedOK) {
             JS_ReportPendingException(cx);
         }
@@ -511,20 +513,22 @@ JSBool ScriptCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
         JSString* str = JS_ValueToString(cx, argv[0]);
         std::string path=JS_EncodeString(cx,str);
         JSBool res = false;
+		jsval rval;
         if (argc == 2 && argv[1].isString()) {
             JSString* globalName = JSVAL_TO_STRING(argv[1]);
             std::string name=JS_EncodeString(cx,globalName);
             js::RootedObject* rootedGlobal = globals[name];
             if (rootedGlobal) {
-                res = ScriptCore::getInstance()->executeScriptFile(path.c_str(), rootedGlobal->get());
+                res = ScriptCore::getInstance()->executeScriptFile(path.c_str(),&rval, rootedGlobal->get());
             } else {
                 JS_ReportError(cx, "Invalid global object: %s", name.c_str());
                 return JS_FALSE;
             }
         } else {
             JSObject* glob = JS_GetGlobalForScopeChain(cx);
-            res = ScriptCore::getInstance()->executeScriptFile(path.c_str(), glob);
+            res = ScriptCore::getInstance()->executeScriptFile(path.c_str(),&rval,glob);
         }
+		JS_SET_RVAL(cx, vp, rval);
         return res;
     }
     return JS_TRUE;

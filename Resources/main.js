@@ -1,1 +1,1 @@
-log("hello world");executeScript("src/myApp.js");var /*int*/ i=1;var j=2;log("i+j="+(i+j));
+log("hello world");executeScript("src/myApp.js");var /*int*/ i=1;var j=2;log("i+j="+(i+j));var c=executeScript("src/resource.js");log(c);
