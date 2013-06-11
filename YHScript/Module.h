@@ -25,6 +25,9 @@ public:
 
     void load();
 
+protected:
+
+    std::map<std::string,JSObject> m_moduleCache;
 };
 
 NS_YHSCRIPT_END

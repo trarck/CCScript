@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3B0B58B1-2734-488E-A542-ECEC11EB2455}</ProjectGuid>
+    <ProjectGuid>{1ABA06D5-4EFD-406D-99BB-50083605A329}</ProjectGuid>
     <RootNamespace>CCScript</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -168,6 +168,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\CCScriptRes\" /e /Y</Command>
   <ItemGroup>
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\YHScript\JSValUtil.cpp" />
+    <ClCompile Include="..\YHScript\Module.cpp" />
     <ClCompile Include="..\YHScript\ScriptCore.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
@@ -175,6 +176,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\CCScriptRes\" /e /Y</Command>
   <ItemGroup>
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\YHScript\JSValUtil.h" />
+    <ClInclude Include="..\YHScript\Module.h" />
     <ClInclude Include="..\YHScript\ScriptCore.h" />
     <ClInclude Include="..\YHScript\YHScriptMacros.h" />
     <ClInclude Include="main.h" />
