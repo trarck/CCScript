@@ -98,7 +98,7 @@ public:
      */
     JSBool executeCompiledScript(JSScript* script,jsval* outVal, JSObject* global , JSContext* cx);
 
-    JSBool executeCompiledScript(JSScript* script,jsval* outVal, JSObject* global , JSContext* cx){
+    JSBool executeCompiledScript(JSScript* script,jsval* outVal, JSObject* global){
         return executeCompiledScript(script,outVal,global,m_context);
     }
     
@@ -107,7 +107,7 @@ public:
     }
 
     JSBool executeCompiledScript(JSScript* script){
-        jsval outVal
+        jsval outVal;
         return executeCompiledScript(script,&outVal);
     }
 

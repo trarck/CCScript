@@ -14,6 +14,9 @@
     <Filter Include="YHScript">
       <UniqueIdentifier>{697e0cc8-8a19-4b35-a3d5-f7917bb2b6b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="YHScript\modules">
+      <UniqueIdentifier>{03fce605-a08a-4be7-b562-2aed1ca79c30}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -31,7 +34,10 @@
     <ClCompile Include="..\YHScript\JSValUtil.cpp">
       <Filter>YHScript</Filter>
     </ClCompile>
-    <ClCompile Include="..\YHScript\Module.cpp">
+    <ClCompile Include="..\YHScript\modules\Person.cpp">
+      <Filter>YHScript\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\YHScript\Modules.cpp">
       <Filter>YHScript</Filter>
     </ClCompile>
   </ItemGroup>
@@ -57,7 +63,13 @@
     <ClInclude Include="..\YHScript\JSValUtil.h">
       <Filter>YHScript</Filter>
     </ClInclude>
-    <ClInclude Include="..\YHScript\Module.h">
+    <ClInclude Include="..\YHScript\modules\Person.h">
+      <Filter>YHScript\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\YHScript\Modules.h">
+      <Filter>YHScript</Filter>
+    </ClInclude>
+    <ClInclude Include="..\YHScript\JSStringWrapper.h">
       <Filter>YHScript</Filter>
     </ClInclude>
   </ItemGroup>

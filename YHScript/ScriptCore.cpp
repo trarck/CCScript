@@ -14,6 +14,7 @@
 #include <vector>
 #include <map>
 #include "ScriptCore.h"
+#include "JSStringWrapper.h"
 // for debug socket
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include <io.h>
@@ -313,7 +314,7 @@ void ScriptCore::createGlobalContext() {
     //}
 }
 
-JSBool ScriptCore::evaluateString(const char *string, jsval *outVal, const char *filename , JSContext* cx, JSObject* global )
+JSBool ScriptCore::evaluateString(const char *string, jsval *outVal, const char *filename , JSObject* global , JSContext* cx )
 {
     return JS_EvaluateScript(cx, global, string, strlen(string),
                            filename, 0, outVal);
@@ -492,8 +493,9 @@ JSBool ScriptCore::log(JSContext* cx, uint32_t argc, jsval *vp)
     if (argc > 0) {
         JSString *string = NULL;
         JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
-        if (string) {
-            js_log(JS_EncodeString(cx,string));
+        if (string!=NULL) {
+            JSStringWrapper wrapper(string,cx);
+            js_log((char *)wrapper);
         }
     }
     return JS_TRUE;

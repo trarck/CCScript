@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CCScript", "CCScript.vcxproj", "{3B0B58B1-2734-488E-A542-ECEC11EB2455}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CCScript", "CCScript.vcxproj", "{1ABA06D5-4EFD-406D-99BB-50083605A329}"
 	ProjectSection(ProjectDependencies) = postProject
 		{21B2C324-891F-48EA-AD1A-5AE13DE12E28} = {21B2C324-891F-48EA-AD1A-5AE13DE12E28}
 		{39379840-825A-45A0-B363-C09FFEF864BD} = {39379840-825A-45A0-B363-C09FFEF864BD}
@@ -40,10 +40,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3B0B58B1-2734-488E-A542-ECEC11EB2455}.Debug|Win32.ActiveCfg = Debug|Win32
-		{3B0B58B1-2734-488E-A542-ECEC11EB2455}.Debug|Win32.Build.0 = Debug|Win32
-		{3B0B58B1-2734-488E-A542-ECEC11EB2455}.Release|Win32.ActiveCfg = Release|Win32
-		{3B0B58B1-2734-488E-A542-ECEC11EB2455}.Release|Win32.Build.0 = Release|Win32
+		{1ABA06D5-4EFD-406D-99BB-50083605A329}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1ABA06D5-4EFD-406D-99BB-50083605A329}.Debug|Win32.Build.0 = Debug|Win32
+		{1ABA06D5-4EFD-406D-99BB-50083605A329}.Release|Win32.ActiveCfg = Release|Win32
+		{1ABA06D5-4EFD-406D-99BB-50083605A329}.Release|Win32.Build.0 = Release|Win32
 		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Debug|Win32.ActiveCfg = Debug|Win32
 		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Debug|Win32.Build.0 = Debug|Win32
 		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Release|Win32.ActiveCfg = Release|Win32

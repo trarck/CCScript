@@ -7,6 +7,7 @@
 //
 
 #include "JSValUtil.h"
+#include "JSStringWrapper.h"
 #include <jsfriendapi.h>
 
 NS_YHSCRIPT_BEGIN
@@ -72,8 +73,9 @@ JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
 JSBool jsval_to_std_string(JSContext *cx, jsval v, std::string* ret) {
     JSString *tmp = JS_ValueToString(cx, v);
     YHSCRIPT_PRECONDITION2(tmp, cx, JS_FALSE, "Error processing arguments");
-
-    *ret = JS_EncodeString(cx,tmp);
+    
+    JSStringWrapper str(tmp,cx);
+    *ret = str.get();
     return JS_TRUE;
 }
 

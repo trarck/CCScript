@@ -43,5 +43,32 @@
 
 #endif //PRECONDITION
 
+#define YHSCRIPT_MODULE_VERSION 0x0001 /* v0.01 */
+
+#ifndef YHSCRIPT_STRINGIFY
+#define YHSCRIPT_STRINGIFY(n) YHSCRIPT_STRINGIFY_HELPER(n)
+#define YHSCRIPT_STRINGIFY_HELPER(n) #n
+#endif
+
+//module
+
+
+
+#define YHSCRIPT_STANDARD_MODULE_STUFF \
+          YHSCRIPT_MODULE_VERSION,     \
+          NULL,                    \
+          __FILE__
+
+
+#define YHSCRIPT_MODULE(modname, regfunc)                                 \
+  extern "C" {                                                        \
+    yhscript::Module modname ## _module =  \
+    {                                                                 \
+      YHSCRIPT_STANDARD_MODULE_STUFF,                                     \
+      (yhscript::module_register_func)regfunc,                             \
+      YHSCRIPT_STRINGIFY(modname)                                         \
+    };                                                                \
+  }
+
 #endif //YHSCRIPT_MACROS_H_
 
