@@ -80,18 +80,19 @@ public:
 	 * will run the specified string
 	 * @param string The path of the script to be run
 	 */
-	JSBool executeScriptFile(const char *path, JSObject* global , JSContext* cx );
+	JSBool executeScriptFile(const char *path,jsval* outVal, JSObject* global , JSContext* cx );
 
-    JSBool executeScriptFile(const char *path, JSObject* global )
+    JSBool executeScriptFile(const char *path,jsval* outVal, JSObject* global )
     {
-         return executeScriptFile(path,global,m_context);
+         return executeScriptFile(path,outVal,global,m_context);
     }
-    /**
-     @brief Execute a script file.
-     @param filename String object holding the filename of the script file that is to be executed
-     */
-    JSBool executeScriptFile(const char* path) { return executeScriptFile(path,m_global,m_context); }
-
+    JSBool executeScriptFile(const char* path,jsval* outVal) { 
+		return executeScriptFile(path,outVal,m_global);
+	}
+	JSBool executeScriptFile(const char* path) { 
+		jsval outVal;
+		return executeScriptFile(path,&outVal,m_global); 
+	}
      /**
      @brief Execute a script file.
      @param filename String object holding the filename of the script file that is to be executed
