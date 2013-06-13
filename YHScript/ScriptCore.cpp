@@ -189,8 +189,7 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     } else {
         JS_ValueToObject(cx, nsval, &ns);
     }
-    //add binding function
-
+    //添加模块动态加载
     JS_DefineFunction(cx, ns, "binding", Modules::binding, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
     ////

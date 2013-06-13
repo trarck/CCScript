@@ -170,6 +170,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\CCScriptRes\" /e /Y</Command>
     <ClCompile Include="..\YHScript\JSValUtil.cpp" />
     <ClCompile Include="..\YHScript\Module.cpp" />
     <ClCompile Include="..\YHScript\Modules.cpp" />
+    <ClCompile Include="..\YHScript\modules\Constants.cpp" />
     <ClCompile Include="..\YHScript\modules\Person.cpp" />
     <ClCompile Include="..\YHScript\ScriptCore.cpp" />
     <ClCompile Include="main.cpp" />
@@ -181,6 +182,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\CCScriptRes\" /e /Y</Command>
     <ClInclude Include="..\YHScript\JSValUtil.h" />
     <ClInclude Include="..\YHScript\Module.h" />
     <ClInclude Include="..\YHScript\Modules.h" />
+    <ClInclude Include="..\YHScript\modules\Constants.h" />
     <ClInclude Include="..\YHScript\modules\Person.h" />
     <ClInclude Include="..\YHScript\ScriptCore.h" />
     <ClInclude Include="..\YHScript\YHScriptMacros.h" />

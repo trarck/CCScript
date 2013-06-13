@@ -43,6 +43,9 @@
     <ClCompile Include="..\YHScript\Module.cpp">
       <Filter>YHScript</Filter>
     </ClCompile>
+    <ClCompile Include="..\YHScript\modules\Constants.cpp">
+      <Filter>YHScript\modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -77,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="..\YHScript\Module.h">
       <Filter>YHScript</Filter>
+    </ClInclude>
+    <ClInclude Include="..\YHScript\modules\Constants.h">
+      <Filter>YHScript\modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

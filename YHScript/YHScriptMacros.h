@@ -77,6 +77,11 @@
       YHSCRIPT_STRINGIFY(modname)                                         \
     }                                                                \
 
+#define YHSCRIPT_DEFINE_CONSTANT(context,target, constant)                            \
+  JS_DefineProperty(context,target,#constant,                         \
+                INT_TO_JSVAL(constant),                                \
+                JS_PropertyStub, JS_StrictPropertyStub,                       \
+                JSPROP_READONLY | JSPROP_ENUMERATE | JSPROP_PERMANENT)
 
 #endif //YHSCRIPT_MACROS_H_
 

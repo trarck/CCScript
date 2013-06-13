@@ -9,6 +9,7 @@
 #include "Modules.h"
 #include "JSValUtil.h"
 #include "modules/Person.h"
+#include "modules/Constants.h"
 
 NS_YHSCRIPT_BEGIN
 
@@ -20,6 +21,7 @@ std::map<std::string,JSObject*> Modules::s_moduleExportsCache;
  */
 void Modules::init()
 {
+    addModule(&Constants::moduleData);
     //init person module
     addModule(&PersonModule::moduleData);
 }
