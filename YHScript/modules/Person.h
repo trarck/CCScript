@@ -3,6 +3,9 @@
 
 #include "jsapi.h"
 #include <string>
+#include "../Module.h"
+
+NS_YHSCRIPT_BEGIN
 
 class Person
 {
@@ -25,10 +28,12 @@ private:
 
 class PersonModule
 {
+public:
     static void registerPersonModule(JSContext *cx,JSObject *module);
     static JSObject* s_person_prototype;
+    static Module moduleData;
 };
 
-
+NS_YHSCRIPT_END
 	
 #endif //YHSCRIPT_MODULES_PERSON_H_

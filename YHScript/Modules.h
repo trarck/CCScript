@@ -14,23 +14,9 @@
 #include "cocos2d.h"
 #include "jsapi.h"
 #include "YHScriptMacros.h"
+#include "Module.h"
 
 NS_YHSCRIPT_BEGIN
-
- typedef void (* module_register_func)(JSContext *cx,JSObject *module);
-
-struct ModuleStruct
-{
-//public:
-   int version;
-   void *dso_handle;
-   std::string filename;
-   module_register_func register_func;
-   std::string name;
-};
-
-typedef struct ModuleStruct Module;
-
 class Modules
 {
 public:
@@ -43,7 +29,7 @@ public:
     /**
      * 添加一个内置模块
      */
-    static void addModules(Module* module);
+    static void addModule(Module* module);
 
      /**
      * 获取一个内置模块

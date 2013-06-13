@@ -1,13 +1,5 @@
-//
-//  ScriptCore.h
-//  testmonkey
-//
-//  Created by Rolando Abarca on 3/14/12.
-//  Copyright (c) 2012 Zynga Inc. All rights reserved.
-//
-
-#ifndef YHSCRIPT_JSVALUTIL_H_
-#define YHSCRIPT_JSVALUTIL_H_
+#ifndef YHSCRIPT_MODULE_H_
+#define YHSCRIPT_MODULE_H_
 
 #include "cocos2d.h"
 #include "jsapi.h"
@@ -15,21 +7,20 @@
 
 NS_YHSCRIPT_BEGIN
 
-class Module
+typedef void (* module_register_func)(JSContext *cx,JSObject *module);
+
+struct ModuleStruct
 {
-public:
-
-    Module();
-    ~Module();
-    bool init();
-
-    void load();
-
-protected:
-
-    std::map<std::string,JSObject> m_moduleCache;
+//public:
+   int version;
+   void *dso_handle;
+   std::string filename;
+   module_register_func register_func;
+   std::string name;
 };
+
+typedef struct ModuleStruct Module;
 
 NS_YHSCRIPT_END
 
-#endif //YHSCRIPT_JSVALUTIL_H_
+#endif //YHSCRIPT_MODULE_H_

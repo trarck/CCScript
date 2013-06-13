@@ -85,14 +85,8 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
 
 void HelloWorld::menuRunCallback(CCObject* pSender)
 {
-//    CCDictionary* data=new CCDictionary();
-//    data->setObject(CCString::create("move"), "name");
-//    data->setObject(CCInteger::create(3), "direction");
-//    
-//    CCLOG("set begin action");
-//    CCMessageManager::defaultManager()->dispatchMessageWithType(CHANGE_ANIMATION, NULL, m_player,data);
-//    CCLOG("set begin action after");
-    
+    yhscript::ScriptCore* sc=yhscript::ScriptCore::getInstance();
+    sc->executeScriptFile("main.js");
 }
 
 void HelloWorld::menuStopCallback(CCObject* pSender)

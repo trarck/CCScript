@@ -70,5 +70,13 @@
     };                                                                \
   }
 
+#define YHSCRIPT_MODULE_DATA(modname, regfunc)                                 \
+    {                                                                 \
+      YHSCRIPT_STANDARD_MODULE_STUFF,                                     \
+      (yhscript::module_register_func)regfunc,                             \
+      YHSCRIPT_STRINGIFY(modname)                                         \
+    }                                                                \
+
+
 #endif //YHSCRIPT_MACROS_H_
 

@@ -8,6 +8,7 @@
 
 #include "Modules.h"
 #include "JSValUtil.h"
+#include "modules/Person.h"
 
 NS_YHSCRIPT_BEGIN
 
@@ -19,13 +20,14 @@ std::map<std::string,JSObject*> Modules::s_moduleExportsCache;
  */
 void Modules::init()
 {
-
+    //init person module
+    addModule(&PersonModule::moduleData);
 }
 
 /**
  * 添加一个内置模块
  */
-void Modules::addModules(Module* module)
+void Modules::addModule(Module* module)
 {
     s_modules[module->name]=module;
 }
@@ -56,17 +58,33 @@ JSBool Modules::binding(JSContext *cx,uint32_t argc,jsval *vp)
 {
     //获取js参数
     jsval *argv = JS_ARGV(cx, vp);
+    jsval jsret;
+    JSObject* exports=NULL;
 
     std::string moduleName;
     //取得模块名。第一个参数为模块名
     jsval_to_std_string(cx,argv[0],&moduleName);
-    //取得模块
-    Module* module=getModule(moduleName);
-    if(module){
-        JSObject* exports=JS_NewObject(cx, NULL, NULL, NULL);
-        module->register_func(cx,exports);
-        s_moduleExportsCache[moduleName]=exports;
+    //从缓存取得模块的注册结果
+    std::map<std::string,JSObject*>::iterator iter;
+    iter=s_moduleExportsCache.find(moduleName);
+    if(iter!=s_moduleExportsCache.end()){
+        exports=iter->second;
+        jsret=OBJECT_TO_JSVAL(exports);
+    }else{
+        //取得模块
+        Module* module=getModule(moduleName);
+    
+        if(module){
+            JSObject* exports=JS_NewObject(cx, NULL, NULL, NULL);
+            module->register_func(cx,exports);
+            s_moduleExportsCache[moduleName]=exports;
+
+            jsret=OBJECT_TO_JSVAL(exports);
+        }else{
+            jsret=JSVAL_NULL;
+        }
     }
+    JS_SET_RVAL(cx, vp, jsret);
     return JS_TRUE;
 }
 

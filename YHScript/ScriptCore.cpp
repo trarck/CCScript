@@ -15,6 +15,7 @@
 #include <map>
 #include "ScriptCore.h"
 #include "JSStringWrapper.h"
+#include "Modules.h"
 // for debug socket
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include <io.h>
@@ -188,6 +189,9 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     } else {
         JS_ValueToObject(cx, nsval, &ns);
     }
+    //add binding function
+
+    JS_DefineFunction(cx, ns, "binding", Modules::binding, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
     ////
     //// Javascript controller (__jsc__)
@@ -242,6 +246,8 @@ ScriptCore::~ScriptCore()
 void ScriptCore::start() {
     // for now just this
     this->createGlobalContext();
+    //init modules
+    Modules::init();
     registerDefaultClasses(m_context,m_global);
 }
 

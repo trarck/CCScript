@@ -1,4 +1,5 @@
 #include "Person.h"
+NS_YHSCRIPT_BEGIN
 //original object
 Person::Person()
 {
@@ -212,7 +213,11 @@ JSFunctionSpec person_methods[] =
 
 JSObject* PersonModule::s_person_prototype;
 
+Module PersonModule::moduleData=YHSCRIPT_MODULE_DATA(Person,PersonModule::registerPersonModule);
+
 void PersonModule::registerPersonModule(JSContext *cx,JSObject *module)
 {
 	s_person_prototype=JS_InitClass(cx,module,NULL,&personClass,wrap_Person_constructor,0,person_properties,person_methods,NULL,NULL);
 }
+
+NS_YHSCRIPT_END
