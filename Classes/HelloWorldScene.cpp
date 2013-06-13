@@ -75,6 +75,8 @@ bool HelloWorld::init()
 
 void HelloWorld::menuCloseCallback(CCObject* pSender)
 {
+    yhscript::ScriptCore::getInstance()->cleanup();
+
     this->removeAllChildrenWithCleanup(true);
     CCDirector::sharedDirector()->end();
 

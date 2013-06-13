@@ -90,7 +90,7 @@ void js_log(const char *format, ...) {
 
 
 
-JSBool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool ScriptCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc!=0)
     {
@@ -115,7 +115,7 @@ JSBool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_TRUE;
 };
 
-JSBool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool ScriptCore_version(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc!=0)
     {
@@ -124,7 +124,7 @@ JSBool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     char version[256];
-    snprintf(version, sizeof(version)-1, "%s - %s", "1","1");
+    snprintf(version, sizeof(version)-1, "%d",YHSCRIPT_MODULE_VERSION);
     JSString * js_version = JS_InternString(cx, version);
 
     jsval ret = STRING_TO_JSVAL(js_version);
@@ -133,7 +133,7 @@ JSBool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_TRUE;
 };
 
-JSBool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool ScriptCore_os(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc!=0)
     {
@@ -170,7 +170,7 @@ JSBool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_TRUE;
 };
 
-JSBool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool ScriptCore_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 {
     ScriptCore::getInstance()->reset();
     JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -211,10 +211,10 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     JS_DefineFunction(cx, global, "executeScript", ScriptCore::executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "forceGC", ScriptCore::forceGC, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 
-    /*JS_DefineFunction(cx, global, "__getPlatform", JSBCore_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, global, "__getOS", JSBCore_os, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );*/
+    JS_DefineFunction(cx, global, "__getPlatform", ScriptCore_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "__getOS", ScriptCore_os, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "__getVersion", ScriptCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "__restartVM", ScriptCore_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 }
 
 static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
