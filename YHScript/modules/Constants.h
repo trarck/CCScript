@@ -5,15 +5,15 @@
 #include <string>
 #include "../Module.h"
 
-NS_YHSCRIPT_BEGIN
+NS_YHSCRIPT_MODULES_BEGIN
 
 class Constants
 {
 public:
-    static void registerConstants(JSContext *cx,JSObject *module);
-    static Module moduleData;
+    static void registerModule(JSContext *cx,JSObject *module);
+    static Module s_moduleData;
 };
 
-NS_YHSCRIPT_END
+NS_YHSCRIPT_MODULES_END
 	
 #endif //YHSCRIPT_MODULES_CONSTANTS_H_

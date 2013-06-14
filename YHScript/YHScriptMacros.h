@@ -1,9 +1,13 @@
 #ifndef YHSCRIPT_MACROS_H_
 #define YHSCRIPT_MACROS_H_
 
-#define NS_YHSCRIPT_BEGIN                     namespace yhscript {
+#define NS_YHSCRIPT_BEGIN                    namespace yhscript {
 #define NS_YHSCRIPT_END                       }
 #define USING_NS_YHSCRIPT                     using namespace yhscript
+
+#define NS_YHSCRIPT_MODULES_BEGIN                    namespace yhscript {namespace modules {
+#define NS_YHSCRIPT_MODULES_END                       }}
+#define USING_NS_YHSCRIPT_MODULES                    using namespace yhscript::modules
 
 #if defined(DEBUG)
 #define YHSCRIPT_PRECONDITION( condition, ...) do {							\

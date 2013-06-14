@@ -45,6 +45,8 @@ public:
 	 */
 	void reset();
 
+    void setupProcessObject();
+
 	/**
 	 * Will create a new context. If one is already there, it will destroy the old context
 	 * and create a new one.
@@ -57,23 +59,23 @@ public:
 	 * @param outVal The jsval that will hold the return value of the evaluation.
 	 * Can be NULL.
 	 */
-	JSBool evaluateString(const char *string, jsval *outVal, const char *filename , JSObject* global , JSContext* cx );
+	JSBool evaluateString(const char *string,unsigned length, jsval *outVal, const char *filename , JSObject* global , JSContext* cx );
 
-    JSBool evaluateString(const char *string, jsval *outVal, const char *filename , JSObject* global){
-        return evaluateString(string,outVal,filename,global,m_context);
+    JSBool evaluateString(const char *string, unsigned length,jsval *outVal, const char *filename , JSObject* global){
+        return evaluateString(string,length, outVal,filename,global,m_context);
     }
 
-    JSBool evaluateString(const char *string, jsval *outVal, const char *filename ){
-        return evaluateString(string,outVal,filename,m_global,m_context);
+    JSBool evaluateString(const char *string, unsigned length,jsval *outVal, const char *filename ){
+        return evaluateString(string,length, outVal,filename,m_global,m_context);
     }
 
-    JSBool evaluateString(const char *string, jsval *outVal){
-        return evaluateString(string,outVal,"");
+    JSBool evaluateString(const char *string,unsigned length, jsval *outVal){
+        return evaluateString(string,length, outVal,"");
     }
 
-    JSBool evaluateString(const char *string){
+    JSBool evaluateString(const char *string,unsigned length){
         jsval rval;
-        return evaluateString(string,&rval);
+        return evaluateString(string,length,&rval);
     }
 
 	/**
@@ -115,6 +117,9 @@ public:
     JSScript* CompileScriptFile(const char *path, JSObject* global , JSContext* cx );
 
     JSScript* CompileScriptString(const char *string, JSObject* global , JSContext* cx );
+
+    JSBool executeBoostFile(const char* path);
+
     /**
      @brief Execute a scripted global function.
      @brief The function should not take any parameters and should return an integer.
@@ -178,6 +183,7 @@ public:
 	JSContext* m_context;
 	JSObject * m_global;
 	JSObject * m_debugGlobal;
+    JSObject * m_process;
 
 };
 

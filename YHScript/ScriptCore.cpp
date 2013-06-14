@@ -180,14 +180,14 @@ JSBool ScriptCore_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 void registerDefaultClasses(JSContext* cx, JSObject* global) {
     // first, try to get the ns
     jsval nsval;
-    JSObject *ns;
+    JSObject* ns;
     JS_GetProperty(cx, global, "yh", &nsval);
     if (nsval == JSVAL_VOID) {
-        ns = JS_NewObject(cx, NULL, NULL, NULL);
+        ns=JS_NewObject(cx,NULL,NULL,NULL);
         nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, global, "yh", &nsval);
-    } else {
-        JS_ValueToObject(cx, nsval, &ns);
+        JS_SetProperty(cx, global, "process", &nsval);
+    }else{
+        ns=JSVAL_TO_OBJECT(nsval);
     }
     //添加模块动态加载
     JS_DefineFunction(cx, ns, "binding", Modules::binding, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
@@ -248,6 +248,7 @@ void ScriptCore::start() {
     //init modules
     Modules::init();
     registerDefaultClasses(m_context,m_global);
+    setupProcessObject();
 }
 
 
@@ -287,6 +288,20 @@ void ScriptCore::reset()
     start();
 }
 
+void ScriptCore::setupProcessObject()
+{
+    jsval val;
+    JS_GetProperty(m_context, m_global, "process", &val);
+    if (val == JSVAL_VOID) {
+        m_process=JS_NewObject(m_context,NULL,NULL,NULL);
+        val = OBJECT_TO_JSVAL(m_process);
+        JS_SetProperty(m_context, m_global, "process", &val);
+    }else{
+        m_process=JSVAL_TO_OBJECT(val);
+    }
+    //添加模块动态加载
+    JS_DefineFunction(m_context, m_process, "binding", Modules::binding, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+}
 
 void ScriptCore::createGlobalContext() {
     if (this->m_context && this->m_runtime) {
@@ -319,9 +334,9 @@ void ScriptCore::createGlobalContext() {
     //}
 }
 
-JSBool ScriptCore::evaluateString(const char *string, jsval *outVal, const char *filename , JSObject* global , JSContext* cx )
+JSBool ScriptCore::evaluateString(const char *string, unsigned length,jsval *outVal, const char *filename , JSObject* global , JSContext* cx )
 {
-    return JS_EvaluateScript(cx, global, string, strlen(string),
+    return JS_EvaluateScript(cx, global, string, length,
                            filename, 0, outVal);
 }
 
@@ -476,6 +491,23 @@ JSScript* ScriptCore::CompileScriptString(const char *string, JSObject* global ,
     //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
     JSScript *script = JS::Compile(cx, obj, options, string, len);
     return script;
+}
+
+JSBool ScriptCore::executeBoostFile(const char* path)
+{
+    jsval fun;
+
+    executeScriptFile(path,&fun);
+
+    if(fun==JSVAL_VOID) return JS_FALSE;
+
+    jsval argv[1];
+    argv[0] = OBJECT_TO_JSVAL(m_process);
+
+    if(!JS_CallFunctionValue(m_context,m_global,fun,1,argv,NULL)){
+        return JS_FALSE;
+    }
+    return JS_TRUE;
 }
 
 void ScriptCore::executeJSFunctionWithThisObj(jsval thisObj, jsval callback,

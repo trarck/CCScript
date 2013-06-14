@@ -1,0 +1,1 @@
+python js2c.py ../script_natives.h ../builtin/boost.js

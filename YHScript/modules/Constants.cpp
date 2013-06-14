@@ -9,7 +9,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-NS_YHSCRIPT_BEGIN
+NS_YHSCRIPT_MODULES_BEGIN
 
 //文件相关的静态值
 void defineFileConConstants(JSContext *cx,JSObject *target)
@@ -828,11 +828,11 @@ void defineFileConConstants(JSContext *cx,JSObject *target)
 #endif
 }
 
-Module Constants::moduleData=YHSCRIPT_MODULE_DATA(Constants,Constants::registerConstants);
+Module Constants::s_moduleData=YHSCRIPT_MODULE_DATA(Constants,Constants::registerModule);
 
-void Constants::registerConstants(JSContext *cx,JSObject *module)
+void Constants::registerModule(JSContext *cx,JSObject *module)
 {
     defineFileConConstants(cx,module);
 }
 
-NS_YHSCRIPT_END
+NS_YHSCRIPT_MODULES_END

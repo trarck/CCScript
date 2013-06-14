@@ -21,9 +21,9 @@ std::map<std::string,JSObject*> Modules::s_moduleExportsCache;
  */
 void Modules::init()
 {
-    addModule(&Constants::moduleData);
+    addModule(&modules::Constants::moduleData);
     //init person module
-    addModule(&PersonModule::moduleData);
+    addModule(&modules::PersonModule::moduleData);
 }
 
 /**
