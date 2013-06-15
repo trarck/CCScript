@@ -828,7 +828,7 @@ void defineFileConConstants(JSContext *cx,JSObject *target)
 #endif
 }
 
-Module Constants::s_moduleData=YHSCRIPT_MODULE_DATA(Constants,Constants::registerModule);
+Module Constants::s_moduleData=YHSCRIPT_MODULE_DATA(constants,Constants::registerModule);
 
 void Constants::registerModule(JSContext *cx,JSObject *module)
 {

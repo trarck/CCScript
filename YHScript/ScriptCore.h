@@ -118,7 +118,7 @@ public:
 
     JSScript* CompileScriptString(const char *string, JSObject* global , JSContext* cx );
 
-    JSBool executeBoostFile(const char* path);
+    JSBool load(const char* mainFile);
 
     /**
      @brief Execute a scripted global function.

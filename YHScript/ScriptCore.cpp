@@ -15,7 +15,9 @@
 #include <map>
 #include "ScriptCore.h"
 #include "JSStringWrapper.h"
+#include "JSValUtil.h"
 #include "Modules.h"
+#include "modules/Natives.h"
 // for debug socket
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include <io.h>
@@ -185,7 +187,7 @@ void registerDefaultClasses(JSContext* cx, JSObject* global) {
     if (nsval == JSVAL_VOID) {
         ns=JS_NewObject(cx,NULL,NULL,NULL);
         nsval = OBJECT_TO_JSVAL(ns);
-        JS_SetProperty(cx, global, "process", &nsval);
+        JS_SetProperty(cx, global, "yh", &nsval);
     }else{
         ns=JSVAL_TO_OBJECT(nsval);
     }
@@ -493,18 +495,25 @@ JSScript* ScriptCore::CompileScriptString(const char *string, JSObject* global ,
     return script;
 }
 
-JSBool ScriptCore::executeBoostFile(const char* path)
+JSBool ScriptCore::load(const char* mainFile)
 {
     jsval fun;
 
-    executeScriptFile(path,&fun);
+    modules::Natives::evaluateCoreNative(m_context,m_global,&fun);
 
     if(fun==JSVAL_VOID) return JS_FALSE;
 
     jsval argv[1];
+    unsigned int argc=1;
+
     argv[0] = OBJECT_TO_JSVAL(m_process);
 
-    if(!JS_CallFunctionValue(m_context,m_global,fun,1,argv,NULL)){
+    //set main file
+    if(!JS_SetProperty(m_context,m_process,"boost",&c_string_to_jsval(m_context,mainFile,strlen(mainFile)))){
+        return JS_FALSE;
+    }
+    jsval rval;
+    if(!JS_CallFunctionValue(m_context,m_global,fun,argc,argv,&rval)){
         return JS_FALSE;
     }
     return JS_TRUE;
@@ -550,22 +559,25 @@ JSBool ScriptCore::executeScript(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc >= 1) {
         jsval* argv = JS_ARGV(cx, vp);
         JSString* str = JS_ValueToString(cx, argv[0]);
-        std::string path=JS_EncodeString(cx,str);
+        JSStringWrapper pathWrap(str,cx);
+        const char* path=(char*)pathWrap;
         JSBool res = false;
 		jsval rval;
         if (argc == 2 && argv[1].isString()) {
             JSString* globalName = JSVAL_TO_STRING(argv[1]);
-            std::string name=JS_EncodeString(cx,globalName);
+            JSStringWrapper globalNameWrap(globalName,cx);
+            const char* name=(char*)globalNameWrap;
+
             js::RootedObject* rootedGlobal = globals[name];
             if (rootedGlobal) {
-                res = ScriptCore::getInstance()->executeScriptFile(path.c_str(),&rval, rootedGlobal->get());
+                res = ScriptCore::getInstance()->executeScriptFile(path,&rval, rootedGlobal->get());
             } else {
-                JS_ReportError(cx, "Invalid global object: %s", name.c_str());
+                JS_ReportError(cx, "Invalid global object: %s", name);
                 return JS_FALSE;
             }
         } else {
             JSObject* glob = JS_GetGlobalForScopeChain(cx);
-            res = ScriptCore::getInstance()->executeScriptFile(path.c_str(),&rval,glob);
+            res = ScriptCore::getInstance()->executeScriptFile(path,&rval,glob);
         }
 		JS_SET_RVAL(cx, vp, rval);
         return res;

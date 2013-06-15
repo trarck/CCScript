@@ -171,7 +171,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\CCScriptRes\" /e /Y</Command>
     <ClCompile Include="..\YHScript\Module.cpp" />
     <ClCompile Include="..\YHScript\Modules.cpp" />
     <ClCompile Include="..\YHScript\modules\Constants.cpp" />
+    <ClCompile Include="..\YHScript\modules\Natives.cpp" />
     <ClCompile Include="..\YHScript\modules\Person.cpp" />
+    <ClCompile Include="..\YHScript\modules\Script.cpp" />
     <ClCompile Include="..\YHScript\ScriptCore.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
@@ -182,8 +184,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\CCScriptRes\" /e /Y</Command>
     <ClInclude Include="..\YHScript\JSValUtil.h" />
     <ClInclude Include="..\YHScript\Module.h" />
     <ClInclude Include="..\YHScript\Modules.h" />
+    <ClInclude Include="..\YHScript\modules\all.h" />
     <ClInclude Include="..\YHScript\modules\Constants.h" />
+    <ClInclude Include="..\YHScript\modules\Natives.h" />
     <ClInclude Include="..\YHScript\modules\Person.h" />
+    <ClInclude Include="..\YHScript\modules\Script.h" />
     <ClInclude Include="..\YHScript\ScriptCore.h" />
     <ClInclude Include="..\YHScript\YHScriptMacros.h" />
     <ClInclude Include="main.h" />

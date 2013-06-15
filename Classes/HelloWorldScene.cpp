@@ -68,7 +68,7 @@ bool HelloWorld::init()
     
     yhscript::ScriptCore* sc=yhscript::ScriptCore::getInstance();
     sc->start();
-    sc->executeScriptFile("main.js");
+    sc->load("main.js");
 
     return true;
 }

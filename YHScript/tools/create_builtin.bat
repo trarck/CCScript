@@ -1,1 +1,1 @@
-python js2c.py ../script_natives.h ../builtin/boost.js
+python js2c.py ../builtin/script_natives.h ../builtin/core.js

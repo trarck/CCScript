@@ -1,6 +1,6 @@
 #include "Natives.h"
 #include "../ScriptCore.h"
-#include "script_natives.h"
+#include "../builtin/script_natives.h"
 
 NS_YHSCRIPT_MODULES_BEGIN
 
@@ -44,17 +44,22 @@ JSBool evaluateNativeSource(JSContext* cx,JSObject* module,const char *source,un
     return JS_TRUE;
 }
 
-Module Natives::s_moduleData=YHSCRIPT_MODULE_DATA(Natives,Natives::registerModule);
+Module Natives::s_moduleData=YHSCRIPT_MODULE_DATA(natives,Natives::registerModule);
 
 void Natives::registerModule(JSContext *cx,JSObject *module)
 {
 	for (int i = 0; natives[i].name; ++i) {
-        if (natives[i].source != node_native) {
-            Local<String> name = String::New(natives[i].name);
-            Handle<String> source = BUILTIN_ASCII_ARRAY(natives[i].source, natives[i].source_len);
-            target->Set(name, source);
+        if (natives[i].source != core_native) {
+            jsval retFun;
+            evaluateNativeSource(cx,module,natives[i].source,natives[i].source_len,&retFun);
+            JS_SetProperty(cx,module,natives[i].name,&retFun);
         }
     }
+}
+
+JSBool Natives::evaluateCoreNative(JSContext* cx,JSObject* global,jsval* rval)
+{
+    return ScriptCore::getInstance()->evaluateString(core_native,sizeof(core_native)-1,rval,"core.js",global,cx);
 }
 
 NS_YHSCRIPT_MODULES_END
