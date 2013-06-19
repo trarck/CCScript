@@ -3,3 +3,6 @@
 /proj.win32/CCScript.opensdf
 /proj.win32/ipch
 /proj.win32/ipch
+
+/YHScript/tools/jsmin.pyc
+/YHScript/builtin/script_natives.h

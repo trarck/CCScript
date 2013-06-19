@@ -1,8 +1,7 @@
 var NativeModule = require('native_module');
-var Script = process.binding('evals').NodeScript;
-var runInThisContext = Script.runInThisContext;
+var Script = process.binding('evals');
+var runInThisContext = Script.evaluate;
 var runInNewContext = Script.runInNewContext;
-var assert = require('assert').ok;
 
 
 // If obj.hasOwnProperty has been overridden, then calling
@@ -108,33 +107,35 @@ var debug = Module._debug;
 //  return tryFile(filename) || tryExtensions(filename, exts) ||
 //         tryExtensions(path.resolve(filename, 'index'), exts);
 //}
-//
-//// In order to minimize unnecessary lstat() calls,
-//// this cache is a list of known-real paths.
-//// Set to an empty object to reset.
-//Module._realpathCache = {};
-//
-//// check if the file exists and is not a directory
-//function tryFile(requestPath) {
+
+// In order to minimize unnecessary lstat() calls,
+// this cache is a list of known-real paths.
+// Set to an empty object to reset.
+Module._realpathCache = {};
+
+// check if the file exists and is not a directory
+function tryFile(requestPath) {
 //  var fs = NativeModule.require('fs');
 //  var stats = statPath(requestPath);
 //  if (stats && !stats.isDirectory()) {
 //    return fs.realpathSync(requestPath, Module._realpathCache);
 //  }
 //  return false;
-//}
-//
-//// given a path check a the file exists with any of the set extensions
-//function tryExtensions(p, exts) {
-//  for (var i = 0, EL = exts.length; i < EL; i++) {
-//    var filename = tryFile(p + exts[i]);
-//
-//    if (filename) {
-//      return filename;
-//    }
-//  }
-//  return false;
-//}
+    //TODO
+    return requestPath;
+}
+
+// given a path check a the file exists with any of the set extensions
+function tryExtensions(p, exts) {
+  for (var i = 0, EL = exts.length; i < EL; i++) {
+    var filename = tryFile(p + exts[i]);
+
+    if (filename) {
+      return filename;
+    }
+  }
+  return false;
+}
 
 
 Module._findPath = function(request, paths) {

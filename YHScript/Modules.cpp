@@ -50,6 +50,28 @@ void Modules::removeAllModules()
     
 }
 
+JSObject* Modules::getModuleInstance(JSContext *cx,const std::string& name)
+{
+    JSObject* exports=NULL;
+
+    std::map<std::string,JSObject*>::iterator iter;
+    iter=s_moduleExportsCache.find(name);
+    if(iter!=s_moduleExportsCache.end()){
+        exports=iter->second;
+    }else{
+        //取得模块
+        Module* module=getModule(name);
+    
+        if(module){
+            exports=JS_NewObject(cx, NULL, NULL, NULL);
+            module->register_func(cx,exports);
+            s_moduleExportsCache[name]=exports;
+        }
+    }
+
+    return exports;
+}
+
 /**
 * use node line api
 * 不是在创建js rutime的时候把所有模块一次性绑定到，global对象，而是动态加载。
@@ -77,7 +99,7 @@ JSBool Modules::binding(JSContext *cx,uint32_t argc,jsval *vp)
         Module* module=getModule(moduleName);
     
         if(module){
-            JSObject* exports=JS_NewObject(cx, NULL, NULL, NULL);
+            exports=JS_NewObject(cx, NULL, NULL, NULL);
             module->register_func(cx,exports);
             s_moduleExportsCache[moduleName]=exports;
 

@@ -17,6 +17,7 @@
 #include "JSStringWrapper.h"
 #include "JSValUtil.h"
 #include "Modules.h"
+#include "ScriptHost.h"
 #include "modules/Natives.h"
 // for debug socket
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -301,8 +302,8 @@ void ScriptCore::setupProcessObject()
     }else{
         m_process=JSVAL_TO_OBJECT(val);
     }
-    //添加模块动态加载
-    JS_DefineFunction(m_context, m_process, "binding", Modules::binding, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+    //主要是设置process对象
+    ScriptHost::init(m_context,m_global,m_process);    
 }
 
 void ScriptCore::createGlobalContext() {

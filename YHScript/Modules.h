@@ -41,6 +41,8 @@ public:
      */
     static void removeAllModules();
     
+    static JSObject* getModuleInstance(JSContext *cx,const std::string& name);
+
    /**
     * use node line api
     * 不是在创建js rutime的时候把所有模块一次性绑定到，global对象，而是动态加载。
@@ -48,6 +50,8 @@ public:
     * 
     */
     static JSBool binding(JSContext *cx,uint32_t argc,jsval *vp);
+
+    
 
 private:
 

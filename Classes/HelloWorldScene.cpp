@@ -65,7 +65,13 @@ bool HelloWorld::init()
 
     /////////////////////////////
     // 3. add your codes below...
-    
+    //CCLOG("write able:%s",CCFileUtils::sharedFileUtils()->getWritablePath().c_str());
+    //CCLOG("cwd:%s",CCFileUtils::sharedFileUtils()->fullPathForFilename("").c_str());
+
+    //std::vector<std::string> searchPaths=CCFileUtils::sharedFileUtils()->getSearchPaths();
+
+    //CCLOG("res:%s",searchPaths.at(0).c_str());
+
     yhscript::ScriptCore* sc=yhscript::ScriptCore::getInstance();
     sc->start();
     sc->load("main.js");

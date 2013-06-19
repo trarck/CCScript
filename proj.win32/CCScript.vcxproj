@@ -175,6 +175,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\CCScriptRes\" /e /Y</Command>
     <ClCompile Include="..\YHScript\modules\Person.cpp" />
     <ClCompile Include="..\YHScript\modules\Script.cpp" />
     <ClCompile Include="..\YHScript\ScriptCore.cpp" />
+    <ClCompile Include="..\YHScript\ScriptHost.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
   </ItemGroup>
@@ -190,6 +191,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\CCScriptRes\" /e /Y</Command>
     <ClInclude Include="..\YHScript\modules\Person.h" />
     <ClInclude Include="..\YHScript\modules\Script.h" />
     <ClInclude Include="..\YHScript\ScriptCore.h" />
+    <ClInclude Include="..\YHScript\ScriptHost.h" />
     <ClInclude Include="..\YHScript\YHScriptMacros.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
